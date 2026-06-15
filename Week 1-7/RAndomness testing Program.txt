@@ -1,0 +1,34 @@
+import random
+
+# Generate 100 random bits
+bits = [random.randint(0, 1) for _ in range(100)]
+
+print("Generated Bits:")
+print("".join(map(str, bits)))
+
+# Frequency Test
+ones = bits.count(1)
+zeros = bits.count(0)
+
+print("\nFrequency Test")
+print("Ones:", ones)
+print("Zeros:", zeros)
+
+if abs(ones - zeros) < 20:
+    print("Interpretation: Distribution appears reasonably balanced.")
+else:
+    print("Interpretation: Distribution may not be random.")
+
+# Runs Test
+runs = 1
+for i in range(1, len(bits)):
+    if bits[i] != bits[i-1]:
+        runs += 1
+
+print("\nRuns Test")
+print("Number of Runs:", runs)
+
+if 40 <= runs <= 60:
+    print("Interpretation: Run pattern appears random.")
+else:
+    print("Interpretation: Run pattern may indicate bias.")

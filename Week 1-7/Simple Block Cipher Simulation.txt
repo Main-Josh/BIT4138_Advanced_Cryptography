@@ -1,0 +1,30 @@
+# Simple Block Cipher Simulation
+
+def substitute(block):
+    # Simple substitution (shift characters by 1)
+    result = ""
+    for char in block:
+        result += chr((ord(char) + 1))
+    return result
+
+def permute(block):
+    # Reverse block positions
+    return block[::-1]
+
+def encrypt(text, block_size=4):
+    blocks = [text[i:i+block_size] for i in range(0, len(text), block_size)]
+
+    encrypted_blocks = []
+
+    for block in blocks:
+        substituted = substitute(block)
+        permuted = permute(substituted)
+        encrypted_blocks.append(permuted)
+
+    return ''.join(encrypted_blocks)
+
+plaintext = input("Enter plaintext: ")
+
+ciphertext = encrypt(plaintext)
+
+print("Ciphertext:", ciphertext)
