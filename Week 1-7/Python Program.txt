@@ -1,0 +1,48 @@
+def text_to_bytes(text):
+    return text.encode('utf-8')
+
+def xor_difference(b1, b2):
+    # Compare up to the length of the shorter input
+    min_len = min(len(b1), len(b2))
+    return bytes([b1[i] ^ b2[i] for i in range(min_len)])
+
+def display_results(pt1, pt2):
+    b1 = text_to_bytes(pt1)
+    b2 = text_to_bytes(pt2)
+
+    diff = xor_difference(b1, b2)
+
+    print("\n--- Differential Analysis ---")
+    print("Plaintext 1:", pt1)
+    print("Plaintext 2:", pt2)
+
+    print("\nByte Representation:")
+    print("PT1:", list(b1))
+    print("PT2:", list(b2))
+
+    print("\nXOR Difference:")
+    print(list(diff))
+
+    changed_positions = [
+        i for i in range(len(diff)) if diff[i] != 0
+    ]
+
+    print("\nObservations:")
+    if not changed_positions:
+        print("- The plaintexts are identical.")
+    else:
+        print(f"- {len(changed_positions)} position(s) differ.")
+        print("- Differing positions:", changed_positions)
+
+        for pos in changed_positions:
+            print(
+                f"  Position {pos}: "
+                f"'{pt1[pos]}' -> '{pt2[pos]}' "
+                f"(XOR = {diff[pos]})"
+            )
+
+# Main Program
+plaintext1 = input("Enter Plaintext 1: ")
+plaintext2 = input("Enter Plaintext 2: ")
+
+display_results(plaintext1, plaintext2)
